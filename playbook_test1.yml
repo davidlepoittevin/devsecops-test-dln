@@ -3,6 +3,6 @@
   hosts: localhost
   gather_facts: true
   tasks:
-    - name: Display hello world
-      debug:
+    - name: Display hello
+      ansible.builtin.debug:
         msg: Hello World!
