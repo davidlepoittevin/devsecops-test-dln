@@ -1,19 +1,19 @@
 ---
-name: DevSecOps
+name: DevSecOps-dev
 
 on:
   push:
     branches:
       - dev
 
-  jobs:
-    code-review:
-      runs-on: ubuntu-latest
+jobs:
+  code-review:
+    runs-on: ubuntu-latest
 
-      steps:
-        - uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v3
 
-        - name: run-ansible-lint
-          uses: ansible/ansible-lint@v6.22.0
-          with:
-            args: --profile production --exclude .github/
+      - name: run-ansible-lint
+        uses: ansible/ansible-lint@v6.22.0
+        with:
+          args: --profile production --exclude .github/
