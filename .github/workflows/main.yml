@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
     - main 
+
 jobs:
   code-review:
     runs-on: ubuntu-latest
@@ -17,6 +18,6 @@ jobs:
       - name: run-ansible-lint
         uses: ansible/ansible-lint@v6.22.0
         with:
-          args: --profile production
+          args: --profile production --exclude .github/
 
           
