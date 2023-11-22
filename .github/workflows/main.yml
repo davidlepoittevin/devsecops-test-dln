@@ -5,18 +5,41 @@ on:
   push:
     branches:
       - dev
+
+  jobs:
+    code-review:
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/checkout@v3
+
+        - name: run-ansible-lint
+          uses: ansible/ansible-lint@v6.22.0
+          with:
+            args: --profile production --exclude .github/
+
+on:
   pull_request:
     branches:
       - main
 
-jobs:
-  code-review:
-    runs-on: ubuntu-latest
+  jobs:
+    code-review:
+      runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
+      steps:
+        - uses: actions/checkout@v3
 
-      - name: run-ansible-lint
-        uses: ansible/ansible-lint@v6.22.0
-        with:
-          args: --profile production --exclude .github/
+        - name: run-ansible-lint
+          uses: ansible/ansible-lint@v6.22.0
+          with:
+            args: --profile production --exclude .github/
+
+    auto_approve:
+      runs-on: ubuntu-latest
+      needs: [code-review]
+      if: ${{ github.actor == 'dependabot[bot]' }}
+      steps:
+        - uses: hmarr/auto-approve-action@v2.0.0
+          with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
