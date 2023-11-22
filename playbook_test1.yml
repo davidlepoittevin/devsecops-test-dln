@@ -3,6 +3,6 @@
   hosts: localhost
   gather_facts: true
   tasks:
-    - name: Display hello world
+    - name: Display hello 
       debug:
         msg: Hello World!
